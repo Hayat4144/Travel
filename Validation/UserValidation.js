@@ -1,4 +1,4 @@
-import { check,validationResult } from "express-validator";
+import { check, validationResult } from "express-validator";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import AsyncFunctionError from "../utils/AsyncFunctionError.js";
 
@@ -11,13 +11,13 @@ export const UserValidation = [
             minUppercase: 1,
             minNumbers: 1,
             minSymbols: 1,
-          })
+        })
         .trim()
         .escape()
         .withMessage('password must be contain symbol,number,capital and small letter.')
         .custom((value, { req }) => {
             if (value !== req.body.confirmpassword) {
-               throw new Error('password does not match.')
+                throw new Error('password does not match.')
             } else {
                 return value;
             }
@@ -36,17 +36,16 @@ export const UserValidation = [
         .isEmail()
         .trim()
         .withMessage('Invalid email'),
-        check('Phone_Number')
-        .isNumeric()
-        .trim()
+    check('Phone_Number')
+        .isMobilePhone()
         .isLength({min:10,max:10})
         .withMessage('Invalid Phone number')
-        
+
 ]
 
 
-export const UserValidationError = (req,res,next)=>{
+export const UserValidationError = (req, res, next) => {
     const errors = validationResult(req)
-    if(!errors.isEmpty()) return res.status(400).json({error:errors.array()[0].msg})
+    if (!errors.isEmpty()) return res.status(400).json({ error: errors.array()[0].msg })
     next()
 }
