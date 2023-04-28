@@ -19,8 +19,9 @@ const Signup = AsyncFunctionError(async (req, res, next) => {
     return res.status(200).json({ data: `${doc.email} has been created Successfully.` });
   }
   ).catch(error => {
-    if (error) return next(new ErrorHandler(error.message, 400));
     if (error.code === 11000) return next(new ErrorHandler(`${error.keyValue.email} is already exist.`, 400))
+    if (error) return next(new ErrorHandler(error.message, 400));
+    
   })
 })
 
