@@ -30,7 +30,6 @@ const UserSchema = new mongoose.Schema({
     },
     Phone_Number:{
         type:Number,
-        max:10,
         min:10
     }
 },
